@@ -6,14 +6,13 @@
   "scripts": {
     "start": "npm run build && node dist",
     "build": "rm -rf dist && tsc",
-    "test": "npm run build && tape test/**.js | tap-dot-compact"
+    "test": "npm run build && tape test/**/*.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "tap-dot-compact": "^2.0.0",
     "tape": "^4.11.0",
     "typescript": "^3.6.3"
   }
