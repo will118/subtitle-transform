@@ -1,5 +1,5 @@
 const test = require('tape')
-const { parse } = require('../dist/vtt-parser');
+const { parse } = require('../../dist/vtt-parser');
 
 const SIMPLE_SAMPLE = `WEBVTT
 

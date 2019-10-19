@@ -1,5 +1,5 @@
 const test = require('tape')
-const { parse } = require('../dist/vtt-parser');
+const { parse } = require('../../dist/vtt-parser');
 
 test('rejects no blank line after header', t => {
   t.plan(1);
