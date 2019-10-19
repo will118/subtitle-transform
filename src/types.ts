@@ -1,25 +1,46 @@
-export interface Header {
-  text: string | null
+export type Option<T> = T | null
+
+export interface Metadata {
+  name: string
+  value: string
 }
 
-export interface Line {
+export interface Header {
+  text: Option<string>
+  metadata: Option<Array<Metadata>>
+}
+
+export interface CueText {
   text: string
 }
 
-export interface Timestamp {
-  hours: number | null
-  minutes: number | null
-  seconds: number | null
-}
-
-export interface Cue {
+export interface TimestampRange {
   start: Timestamp
   end: Timestamp
-  id: string | null
-  lines: Array<Line>
+}
+
+export interface Timestamp {
+  hours: Option<number>
+  minutes: Option<number>
+  seconds: Option<number>
+  milliseconds: Option<number>
+}
+
+export type Block = Cue | Region | Style
+
+export interface Cue {
+  range: TimestampRange
+  id: Option<string>
+  lines: Array<CueText>
+}
+
+export interface Region {
+}
+
+export interface Style {
 }
 
 export interface SubtitleData {
   header: Header
-  cues: Array<Cue>
+  blocks: Array<Block>
 }
