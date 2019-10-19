@@ -147,16 +147,7 @@ const parseCue: ParseFn<Cue> = (body, pos) => {
   let lines: Array<CueText> = [];
   let inCue = false;
 
-  // let foo = 0;
   while (!isEOF(body, pos)) {
-    // if (foo++ < 25) {
-      // console.log(
-        // foo,
-        // 'Z' + (inCue ? 'C' : ''),
-        // JSON.stringify(body.substring(pos.i))
-      // );
-    // }
-
     if (body[pos.i] === '\n') {
       // empty line
       pos.i++;
