@@ -1,5 +1,6 @@
-import { Block, Cue, Timestamp, TimestampRange, Option, CueText } from '../types';
+import { Block, Cue, Timestamp, TimestampRange, Option, CueLine } from '../types';
 import { ParseFn } from './types';
+import { parseCueLine } from './cue-text';
 
 import { searchLine, consumeLine, skipSpace, isEOF } from './utils';
 
@@ -122,13 +123,13 @@ const parseSettings: ParseFn<void> = (body, pos) => {
   consumeLine(body, pos)
 }
 
-const parseCueText: ParseFn<Array<CueText>> = (body, pos) => {
+const parseCueText: ParseFn<Array<CueLine>> = (body, pos) => {
   const results = [];
 
   while (!isEOF(body, pos)) {
     const line = consumeLine(body, pos)
     if (line) {
-      results.push({ text: line });
+      results.push(parseCueLine(line));
     } else {
       pos.i++;
       if (body[pos.i] === '\n') {
@@ -142,9 +143,10 @@ const parseCueText: ParseFn<Array<CueText>> = (body, pos) => {
 
 const parseCue: ParseFn<Cue> = (body, pos) => {
   const containsTs = searchLine('-->')
+
   let id: Option<string> = null;
   let range: Option<TimestampRange> = null;
-  let lines: Array<CueText> = [];
+  let lines: Array<CueLine> = [];
   let inCue = false;
 
   while (!isEOF(body, pos)) {

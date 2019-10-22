@@ -1,4 +1,14 @@
+# vtt-transform
 
+* Parse VTT files and output SRT or ASS.
+  * SRT is a very limited format so retains only timings and text.
+  * ASS should retain most of the styling.
+
+# Progress
+
+- [x] Basic VTT parsing
+- [x] SRT output
+- [ ] ASS output
 
 Resources used:
 - https://www.w3.org/TR/webvtt1/#file-parsing

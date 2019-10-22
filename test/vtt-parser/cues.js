@@ -44,12 +44,30 @@ NOTE Different
 <c.yellow>Wowza.</c>`;
 
 test('parses timestamps for a cue from sample', t => {
-  t.plan(2);
+  t.plan(1);
   const result = parse(SAMPLE);
   const [cue] = result.blocks;
-  t.equal(cue.id, '1');
   t.deepEqual(cue.range, {
     start: { hours: 0, minutes: 0, seconds: 2, milliseconds: 200 },
     end: { hours: 0, minutes: 0, seconds: 5, milliseconds: 200 }
+  });
+});
+
+test('parses cue text from sample', t => {
+  t.plan(1);
+  const result = parse(SAMPLE);
+  const [cue] = result.blocks;
+  const [firstLine] = cue.lines;
+  t.deepEqual(firstLine, {
+    tag: {
+      kind: Tags.Class,
+      value: 'yellow',
+    },
+    contents: [
+      {
+        tag: null,
+        value: 'Yes, hello yes'
+      }
+    ]
   });
 });

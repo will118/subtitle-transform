@@ -10,8 +10,32 @@ export interface Header {
   metadata: Option<Array<Metadata>>
 }
 
-export interface CueText {
-  text: string
+export enum TagType {
+  Class,
+  Bold,
+  Italic
+}
+
+export interface ClassTag {
+  type: TagType.Class
+  className: string
+}
+
+export interface BoldTag {
+  type: TagType.Bold
+}
+
+export interface ItalicTag {
+  type: TagType.Italic
+}
+
+export type Tag = ClassTag | BoldTag | ItalicTag
+
+export type CueElement = CueLine & { tag: Tag }
+
+// Root
+export interface CueLine {
+  children: Array<CueElement | string>
 }
 
 export interface TimestampRange {
@@ -20,10 +44,10 @@ export interface TimestampRange {
 }
 
 export interface Timestamp {
-  hours: Option<number>
-  minutes: Option<number>
-  seconds: Option<number>
-  milliseconds: Option<number>
+  hours: number
+  minutes: number
+  seconds: number
+  milliseconds: number
 }
 
 export type Block = Cue | Region | Style
@@ -31,7 +55,7 @@ export type Block = Cue | Region | Style
 export interface Cue {
   range: TimestampRange
   id: Option<string>
-  lines: Array<CueText>
+  lines: Array<CueLine>
 }
 
 export interface Region {
