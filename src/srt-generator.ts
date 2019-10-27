@@ -1,4 +1,4 @@
-import { Block, Cue, Timestamp, SubtitleData } from './types';
+import { Block, Cue, CueLine, Timestamp, SubtitleData } from './types';
 
 const isCue = (block: Block): block is Cue => 'range' in block;
 
@@ -13,6 +13,18 @@ const ts = (ts: Timestamp) => {
   return `${h}:${m}:${s},${ms}`;
 }
 
+const formatCueLine = (children: CueLine['children']): string => {
+  let output = ''
+  for (const elem of children) {
+    if (typeof elem === "string") {
+      output += elem;
+    } else {
+      output += formatCueLine(elem.children)
+    }
+  }
+  return output;
+}
+
 function generate(sub: SubtitleData) {
   let output = '';
   let index = 1;
@@ -24,9 +36,9 @@ function generate(sub: SubtitleData) {
 
     if (isCue(block)) {
       output += `${index++}\n`;
-      output += `${ts(block.range.start)} --> ${ts(block.range.end)}`;
+      output += `${ts(block.range.start)} --> ${ts(block.range.end)}\n`;
       for (const line of block.lines) {
-        output += line.children[0]
+        output += `${formatCueLine(line.children)}\n`;
       }
     }
   }

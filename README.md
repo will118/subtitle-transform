@@ -7,7 +7,11 @@
 # Progress
 
 - [x] Basic VTT parsing
+  - [x] Style support
+- [ ] VTT output
+- [ ] SRT parsing
 - [x] SRT output
+- [ ] ASS parsing
 - [ ] ASS output
 
 Resources used:
@@ -15,3 +19,5 @@ Resources used:
 - https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API
 - https://github.com/mozilla/vtt.js
 - https://chromium.googlesource.com/chromium/blink/+/e79071b4c4e899957766312459dd4a5199bf266d/Source/core/html/track/vtt/
+- https://github.com/libass/libass/blob/master/libass/ass_parse.c
+- https://matroska.org/technical/specs/subtitles/ssa.html
