@@ -4,6 +4,12 @@
   * SRT is a very limited format so retains only timings and text.
   * ASS should retain most of the styling.
 
+# Usage
+
+```
+node dist/index.js --input the-amazing-show-ep1.vtt --outputFormat srt
+```
+
 # Progress
 
 - [x] Basic VTT parsing
