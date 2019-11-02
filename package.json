@@ -1,5 +1,5 @@
 {
-  "name": "vtt-transform",
+  "name": "subtitle-transform",
   "version": "0.0.1",
   "description": "```",
   "main": "dist/index.js",
@@ -12,9 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^12.11.4"
+    "@types/node": "^12.11.4",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
+    "@types/minimist": "^1.2.0",
     "tape": "^4.11.0",
     "typescript": "^3.6.3"
   }

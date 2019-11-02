@@ -1,5 +1,6 @@
 const test = require('tape')
 const { parse } = require('../../dist/vtt-parser');
+const { TagType } = require('../../dist/types');
 
 const SIMPLE_SAMPLE = `WEBVTT
 
@@ -59,15 +60,28 @@ test('parses cue text from sample', t => {
   const [cue] = result.blocks;
   const [firstLine] = cue.lines;
   t.deepEqual(firstLine, {
-    tag: {
-      kind: Tags.Class,
-      value: 'yellow',
-    },
-    contents: [
+    children: [
       {
-        tag: null,
-        value: 'Yes, hello yes'
+        tag: {
+          type: TagType.Class,
+          className: 'yellow',
+        },
+        children: [ 'Yes, hello yes' ]
       }
     ]
+  });
+});
+
+test('parses settings for a cue from sample', t => {
+  t.plan(2);
+  const result = parse(SAMPLE);
+  const [cue] = result.blocks;
+  t.ok(cue.settings !== null);
+  t.deepEqual(cue.settings, {
+    vertical: null,
+    line: { value: 70 },
+    position: { value: 50 },
+    size: null,
+    align: 'middle',
   });
 });

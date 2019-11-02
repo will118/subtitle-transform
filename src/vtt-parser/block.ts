@@ -1,6 +1,9 @@
-import { Block, Cue, Timestamp, TimestampRange, Option, CueLine } from '../types';
+import {
+  Block, Cue, CueSettings, Timestamp, TimestampRange, Option, CueLine
+} from '../types';
 import { ParseFn } from './types';
 import { parseCueLine } from './cue-text';
+import { parseCueSettings } from './cue-settings';
 
 import { searchLine, consumeLine, skipSpace, isEOF } from './utils';
 
@@ -119,10 +122,6 @@ const parseTimestamps: ParseFn<Option<TimestampRange>> = (body, pos) => {
   return { start, end };
 }
 
-const parseSettings: ParseFn<void> = (body, pos) => {
-  consumeLine(body, pos)
-}
-
 const parseCueText: ParseFn<Array<CueLine>> = (body, pos) => {
   const results = [];
 
@@ -146,6 +145,7 @@ const parseCue: ParseFn<Cue> = (body, pos) => {
 
   let id: Option<string> = null;
   let range: Option<TimestampRange> = null;
+  let settings: Option<CueSettings> = null;
   let lines: Array<CueLine> = [];
   let inCue = false;
 
@@ -156,8 +156,7 @@ const parseCue: ParseFn<Cue> = (body, pos) => {
     } else {
       if (containsTs(body, pos)) {
         range = parseTimestamps(body, pos);
-        // TODO: implement
-        parseSettings(body, pos);
+        settings = parseCueSettings(body, pos);
         inCue = true;
       } else if (inCue) {
         lines = parseCueText(body, pos);
@@ -168,11 +167,11 @@ const parseCue: ParseFn<Cue> = (body, pos) => {
     }
   }
 
-  if (range == null) {
-    throw new Error('Failed to parse timestamp');
+  if (range == null || settings == null) {
+    throw new Error('Failed to parse');
   }
 
-  return { id, range, lines };
+  return { id, range, lines, settings };
 }
 
 export const parseBlock: ParseFn<Block> = (body, pos) => {

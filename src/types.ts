@@ -50,21 +50,58 @@ export interface Timestamp {
   milliseconds: number
 }
 
-export type Block = Cue | Region | Style
+export interface Percentage {
+  value: number
+}
+
+export interface VerticalSetting {
+  vertical: Option<'rl' | 'lr'>
+}
+
+export interface LineSetting {
+  line: Option<number | Percentage>
+}
+
+export interface PositionSetting {
+  position: Option<Percentage>
+}
+
+export interface SizeSetting {
+  size: Option<Percentage>
+}
+
+export interface AlignSetting {
+  align: Option<'start' | 'middle' | 'end'>
+}
+
+export type CueSetting =
+  VerticalSetting | LineSetting | PositionSetting | SizeSetting | AlignSetting
+
+export type CueSettings =
+  VerticalSetting & LineSetting & PositionSetting & SizeSetting & AlignSetting
+
+export type Block = Cue | Region
 
 export interface Cue {
   range: TimestampRange
   id: Option<string>
   lines: Array<CueLine>
+  settings: CueSettings
 }
 
 export interface Region {
 }
 
 export interface Style {
+  name: string
+}
+
+export interface StyleTree {
+  styles: Array<Style>
 }
 
 export interface SubtitleData {
+  styles: StyleTree
   header: Header
   blocks: Array<Block>
 }

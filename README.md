@@ -14,6 +14,10 @@
 - [ ] ASS parsing
 - [ ] ASS output
 
+# Not really on my list
+
+- External style files (should be easy though)
+
 Resources used:
 - https://www.w3.org/TR/webvtt1/#file-parsing
 - https://developer.mozilla.org/en-US/docs/Web/API/WebVTT_API
