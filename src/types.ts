@@ -92,16 +92,72 @@ export interface Cue {
 export interface Region {
 }
 
-export interface Style {
-  name: string
+// STYLES:
+//  background and its longhand properties
+//  color
+//  font and its longhand properties
+//  line-height
+//  opacity
+//  outline and its longhand properties
+//  ruby-position
+//  text-combine-upright
+//  text-decoration and its longhand properties
+//  text-shadow
+//  visibility
+//  white-space
+
+type AlphaValue = number | Percentage
+
+export interface OpacityProperty {
+  opacity: AlphaValue
 }
 
-export interface StyleTree {
-  styles: Array<Style>
+interface HexColor {
+  hex: string
+}
+
+interface RGBColor {
+  red: number
+  green: number
+  blue: number
+  alpha: Option<AlphaValue>
+}
+
+interface HSLColor {
+  hue: number
+  saturation: Percentage
+  lightness: Percentage
+  alpha: Option<AlphaValue>
+}
+
+export interface ColorProperty {
+  color: string | HexColor | RGBColor | HSLColor
+}
+
+export type StyleProperty = OpacityProperty | ColorProperty
+export type StyleProperties = Partial<OpacityProperty & ColorProperty>
+
+export interface IdSelector {
+  id: string
+}
+
+export interface ClassSelector {
+  class: string
+}
+
+export interface ElementSelector {
+  element: string
+}
+
+export type Selector = IdSelector | ClassSelector | ElementSelector
+
+export interface Style {
+  selector: Selector
+  properties: StyleProperties
 }
 
 export interface SubtitleData {
-  styles: StyleTree
+  styles: Array<Style>
   header: Header
   blocks: Array<Block>
 }

@@ -1,4 +1,5 @@
 import { ParseFn, Position } from './types';
+import { Percentage } from '../types';
 
 export const isEOF: ParseFn<boolean> = (body, pos) => pos.i >= body.length
 
@@ -24,6 +25,22 @@ export const skipNewlines: ParseFn<void> = (body, pos) => {
   while (body[pos.i] == '\n') { pos.i++; }
 }
 
+export const match: (str: string) => ParseFn<boolean> = (str: string) =>
+  (body, pos) => {
+    let i = 0;
+    let end = str.length;
+
+    while (!isEOF(body, pos) && i < end) {
+      if (str[i] !== body[pos.i]) {
+        return false;
+      }
+      i++;
+      pos.i++;
+    }
+
+    return true;
+  }
+
 export const consumeLine: ParseFn<string | null> = (body, pos) => {
   return consume(body, pos, (body, pos) => body[pos.i] !== '\n');
 };
@@ -36,3 +53,7 @@ export const searchLine: (str: string) => ParseFn<boolean> = str =>
     }
     return body.slice(pos.i, nextNewline).includes(str);
   };
+
+export const parsePercentage = (value: string): Percentage => ({
+  value: parseInt(value.slice(0, -1), 10)
+});

@@ -2,6 +2,7 @@ import { SubtitleData } from '../types';
 
 import { isEOF, skipNewlines } from './utils';
 import { parseHeader } from './header';
+import { parseRegions } from './region';
 import { parseBlock } from './block';
 
 export function parse(body: string): SubtitleData {
@@ -25,7 +26,7 @@ export function parse(body: string): SubtitleData {
   // 4.1.5 Zero or more WebVTT region definition blocks, WebVTT style blocks
   //       and WebVTT comment blocks separated from each other by one or more
   //       WebVTT line terminators.
-  const styles = { styles: [] };
+  const styles = parseRegions(body, pos);
 
   // 4.1.6 Zero or more WebVTT line terminators.
   // 4.1.7 Zero or more WebVTT cue blocks and WebVTT comment blocks separated

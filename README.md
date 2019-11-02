@@ -1,4 +1,4 @@
-# vtt-transform
+# subtitle-transform
 
 * Parse VTT files and output SRT or ASS.
   * SRT is a very limited format so retains only timings and text.
@@ -19,6 +19,9 @@ node dist/index.js --input the-amazing-show-ep1.vtt --outputFormat srt
 - [x] SRT output
 - [ ] ASS parsing
 - [ ] ASS output
+
+WARNING: I vary between reading specs and reference implementations in depth to
+hacking stuff that will work on the 1 or 2 samples files I am using.
 
 # Not really on my list
 

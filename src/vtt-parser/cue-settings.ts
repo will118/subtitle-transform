@@ -1,10 +1,6 @@
-import { CueSetting, CueSettings, Percentage } from '../types';
+import { CueSetting, CueSettings } from '../types';
 import { ParseFn } from './types';
-import { isEOF } from './utils';
-
-const parsePercentage = (value: string): Percentage => ({
-  value: parseInt(value.slice(0, -1), 10)
-});
+import { isEOF, parsePercentage } from './utils';
 
 const parseSettingKey = (key: string, value: string): CueSetting  => {
   switch (key) {

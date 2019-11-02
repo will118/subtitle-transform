@@ -15,9 +15,8 @@ function run() {
     throw new Error('Invalid input file');
   }
 
-  const vttF = readFileSync(argv.input, 'utf8');
-  const cssContents = '';
-  const subtitleData = parse(vttF, cssContents);
+  const inputContents = readFileSync(argv.input, 'utf8');
+  const subtitleData = parse(inputContents);
 
   let generate = generateSRT;
 
