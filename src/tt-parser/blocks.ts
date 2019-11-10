@@ -1,4 +1,4 @@
-import { CueSettings, XmlElement, Block, TimestampRange } from '../types';
+import { CueLine, CueSettings, XmlElement, Block, TimestampRange } from '../types';
 import { Attrs, isElem, findChild, tryStr } from './utils';
 
 const mapRange = (attrs: Attrs): TimestampRange => {
@@ -30,6 +30,21 @@ const mapRange = (attrs: Attrs): TimestampRange => {
   return { start: mapMatch(beginMatch), end: mapMatch(endMatch) };
 }
 
+const mapLines = (children: XmlElement['children']): Array<CueLine>=> {
+  return [
+    {
+      children: children.reduce((acc: CueLine['children'], elem) => {
+        if (!isElem(elem)) {
+          acc.push(elem);
+        } else if (elem.name !== 'br') {
+          throw new Error('Unsupported element in cue');
+        }
+        return acc;
+      }, [])
+    }
+  ];
+}
+
 const mapBlock = (block: XmlElement): Block => {
   const settings: CueSettings = {
     vertical: null,
@@ -38,11 +53,10 @@ const mapBlock = (block: XmlElement): Block => {
     size: null,
     align: null,
   }
-  console.log(block);
   return {
     range: mapRange(block.attributes),
     id: block.attributes['id'] ?? null,
-    lines: [],
+    lines: mapLines(block.children),
     settings,
   }
 }

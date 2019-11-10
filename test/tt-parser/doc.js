@@ -1,5 +1,6 @@
 const test = require('tape')
 const { parse } = require('../../dist/tt-parser');
+const { TagType } = require('../../dist/types');
 
 const SAMPLE = `<?xml version="1.0" encoding="utf-8"?> <tt xmlns="http://www.w3.org/2006/10/ttaf1" xmlns:ttp="http://www.w3.org/2006/10/ttaf1#parameter" ttp:timeBase="media" xmlns:tts="http://www.w3.org/2006/10/ttaf1#style" xml:lang="en" xmlns:ttm="http://www.w3.org/2006/10/ttaf1#metadata">
   <head>
@@ -60,4 +61,15 @@ test('parses a cue timestamp', t => {
       hours: 0, minutes: 1, seconds: 58, milliseconds: 360
     }
   });
+});
+
+test('parses cue text from sample', t => {
+  t.plan(1);
+  const { blocks } = parse(SAMPLE);
+  t.deepEqual(blocks.map(x => x.lines), [
+    [ { children: [ 'First caption!' ] } ],
+    [ { children: [ 'Second caption?' ] } ],
+    [ { children: [ 'Ok third caption.' ] } ],
+    [ { children: [ 'A what', 'oh' ] } ],
+  ]);
 });

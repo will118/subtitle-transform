@@ -34,6 +34,7 @@ export type Tag = ClassTag | BoldTag | ItalicTag
 export type CueElement = CueLine & { tag: Tag }
 
 // Root
+// TODO: wtf is this mess of a type
 export interface CueLine {
   children: Array<CueElement | string>
 }
