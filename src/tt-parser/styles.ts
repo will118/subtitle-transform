@@ -1,32 +1,5 @@
-import { XmlElement, Style, StyleProperties, Option } from '../types';
-
-const isElem = (elem: XmlElement | string): elem is XmlElement =>
-  typeof elem !== 'string';
-
-const findChild = (elem: XmlElement | string, name: string): XmlElement => {
-  if (!isElem(elem)) {
-    throw new Error('Must be Element');
-  }
-
-  const child = elem.children.find(x => isElem(x) && x.name === name);
-  return child as XmlElement
-}
-
-type Attrs = { [name: string]: string }
-
-const tryInt = (attrs: Attrs, name: string): Option<number> => {
-  if (name in attrs) {
-    return parseInt(attrs[name], 10);
-  }
-  return null;
-}
-
-const tryStr = (attrs: Attrs, name: string): Option<string> => {
-  if (name in attrs) {
-    return attrs[name];
-  }
-  return null;
-}
+import { XmlElement, Style, StyleProperties } from '../types';
+import { Attrs, isElem, findChild, tryInt, tryStr } from './utils';
 
 const mapStyle = (attrs: Attrs) => {
   const properties: StyleProperties = {};

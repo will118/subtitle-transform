@@ -48,3 +48,16 @@ test('parses styles from sample', t => {
   ]);
 });
 
+test('parses a cue timestamp', t => {
+  t.plan(1);
+  const { blocks }  = parse(SAMPLE);
+  const [cue] = blocks;
+  t.deepEqual(cue.range, {
+    start: {
+      hours: 0, minutes: 1, seconds: 57, milliseconds: 320
+    },
+    end: {
+      hours: 0, minutes: 1, seconds: 58, milliseconds: 360
+    }
+  });
+});
