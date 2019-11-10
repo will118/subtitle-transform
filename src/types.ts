@@ -13,7 +13,8 @@ export interface Header {
 export enum TagType {
   Class,
   Bold,
-  Italic
+  Italic,
+  Span,
 }
 
 export interface ClassTag {
@@ -29,15 +30,15 @@ export interface ItalicTag {
   type: TagType.Italic
 }
 
-export type Tag = ClassTag | BoldTag | ItalicTag
-
-export type CueElement = CueLine & { tag: Tag }
-
-// Root
-// TODO: wtf is this mess of a type
-export interface CueLine {
-  children: Array<CueElement | string>
+export interface SpanTag {
+  type: TagType.Span,
+  // TODO: attrs
 }
+
+export type Tag = ClassTag | BoldTag | ItalicTag | SpanTag
+
+export type CueElement = { tag: Tag, children: CueLine }
+export type CueLine = Array<CueElement | string>
 
 export interface XmlRoot {
   parent: null

@@ -24,6 +24,7 @@ const SAMPLE = `<?xml version="1.0" encoding="utf-8"?> <tt xmlns="http://www.w3.
       <p style="s1" begin="00:02:06.52" id="p1" end="00:02:08.04">Second caption?</p>
       <p begin="00:02:08.04" id="p2" end="00:02:11.44">Ok third caption.</p>
       <p begin="00:02:11.44" id="p3" end="00:02:16.44">A what<br />oh</p>
+      <p style="s1" begin="00:03:01.88" id="p14" end="00:03:04.64"><span tts:color="white">This line is white<br /></span>This line is something else</p>
     </div>
   </body>
 </tt>`;
@@ -67,9 +68,20 @@ test('parses cue text from sample', t => {
   t.plan(1);
   const { blocks } = parse(SAMPLE);
   t.deepEqual(blocks.map(x => x.lines), [
-    [ { children: [ 'First caption!' ] } ],
-    [ { children: [ 'Second caption?' ] } ],
-    [ { children: [ 'Ok third caption.' ] } ],
-    [ { children: [ 'A what', 'oh' ] } ],
+    [ [ 'First caption!' ] ],
+    [ [ 'Second caption?' ] ],
+    [ [ 'Ok third caption.' ] ],
+    [ [ 'A what', 'oh' ] ],
+    [
+      [
+        {
+          tag: {
+            type: TagType.Span,
+          },
+          children: [ 'This line is white' ]
+        },
+        'This line is something else',
+      ]
+    ]
   ]);
 });

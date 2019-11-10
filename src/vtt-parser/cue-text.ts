@@ -1,4 +1,4 @@
-import { CueElement, CueLine, Tag, TagType } from '../types';
+import { CueLine, Tag, TagType } from '../types';
 
 const tagForStr = (str: string): Tag & { closing: boolean } => {
   const closing = str[0] === '/';
@@ -34,13 +34,13 @@ const tagForStr = (str: string): Tag & { closing: boolean } => {
   throw new Error('Tag not supported or some other error: ' + str);
 }
 
-const parse = (pos: { i: number }, line: string): CueElement['children'] => {
+const parse = (pos: { i: number }, line: string): CueLine => {
   enum State { Normal, Tag }
 
   let str = '';
   let state = State.Normal;
 
-  const children: CueElement['children'] = []
+  const children: CueLine = []
 
   while (pos.i < line.length) {
     const char = line[pos.i];
@@ -80,7 +80,5 @@ const parse = (pos: { i: number }, line: string): CueElement['children'] => {
 export const parseCueLine = (line: string): CueLine => {
   let pos = { i: 0 };
 
-  return {
-    children: parse(pos, line),
-  };
+  return parse(pos, line);
 };

@@ -13,7 +13,7 @@ const ts = (ts: Timestamp) => {
   return `${h}:${m}:${s},${ms}`;
 }
 
-const formatCueLine = (children: CueLine['children']): string => {
+const formatCueLine = (children: CueLine): string => {
   let output = ''
   for (const elem of children) {
     if (typeof elem === "string") {
@@ -38,7 +38,7 @@ function generate(sub: SubtitleData) {
       output += `${index++}\n`;
       output += `${ts(block.range.start)} --> ${ts(block.range.end)}\n`;
       for (const line of block.lines) {
-        output += `${formatCueLine(line.children)}\n`;
+        output += `${formatCueLine(line)}\n`;
       }
     }
   }
