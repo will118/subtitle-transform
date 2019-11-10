@@ -2,16 +2,50 @@ import { Option, Style, StyleProperties, StyleProperty, Selector } from '../type
 import { ParseFn } from './types';
 import { isEOF, match, consumeLine, parsePercentage } from './utils';
 
+const unescape = (str: string) => {
+  // to escape any numeric character, just prefix it with \3 and append a
+  // space character
+  if (str.startsWith('\\3')) {
+    if (str.length == 2) {
+      throw new Error('Invalid escape');
+    }
+
+    let i = 2;
+    let selector = '';
+
+    while (i < str.length) {
+      // TODO: loads of stuff still not supported.
+      if (str[i] === ' ') {
+        i++;
+        continue;
+      }
+
+      if (str[i] === '\\' && str[i+1] === ' ') {
+        selector += ' ';
+        i += 2;
+        continue;
+      }
+
+      selector += str[i];
+      i++;
+    }
+
+    return selector;
+  }
+
+  return str;
+}
+
 const parseSelector = (selector: string): Selector => {
   if (selector.startsWith('.')) {
-    return { class: selector.substring(1) };
+    return { class: unescape(selector.substring(1)) };
   }
 
   if (selector.startsWith('#')) {
-    return { id: selector.substring(1) };
+    return { id: unescape(selector.substring(1)) };
   }
 
-  return { element: selector };
+  return { element: unescape(selector) };
 }
 
 const parseProperty = (name: string, value: string): StyleProperty => {

@@ -55,7 +55,7 @@ const ID_SAMPLE = `WEBVTT
 
 ::cue(#\\31) { color: lime; }
 ::cue(#\\31 23) { color: aliceblue; }
-::cue(#crédit\\ de\\ transcription) { color: red; }
+::cue(#crédit\ de\ transcription) { color: red; }
 
 1
 00:00.000 --> 00:02.000
@@ -84,7 +84,7 @@ test('parses styles with ids from sample', t => {
     },
     {
       selector: { id: 'crédit de transcription' },
-      properties: { color: 'aliceblue' },
+      properties: { color: 'red' },
     }
   ]);
 });

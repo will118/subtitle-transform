@@ -1,0 +1,41 @@
+const test = require('tape')
+const { parseDoc } = require('../../dist/tt-parser/doc');
+
+const SAMPLE = `<?xml version="1.0" encoding="utf-8"?>
+<tt xmlns="http://www.w3.org/2006/10/ttaf1" xmlns:ttp="http://www.w3.org/2006/10/ttaf1#parameter" ttp:timeBase="media" xmlns:tts="http://www.w3.org/2006/10/ttaf1#style" xml:lang="en" xmlns:ttm="http://www.w3.org/2006/10/ttaf1#metadata">
+  <head>
+    <!--Created on 1/11/2011 at 00:30:00-->
+    <metadata>
+      <ttm:title>
+        Yellow eggs and potatoes
+      </ttm:title>
+      <ttm:copyright>
+        AuthorName
+      </ttm:copyright>
+    </metadata>
+    <styling>
+      <style id="s1" style="s0" tts:color="yellow" />
+      <style id="s0" tts:backgroundColor="black" tts:fontStyle="normal" tts:fontSize="16" tts:fontFamily="sansSerif" tts:color="white" />
+    </styling>
+  </head>
+  <body tts:textAlign="center" style="s0">
+    <div>
+      <p begin="00:01:57.32" id="p0" end="00:01:58.36">First caption!</p>
+      <p style="s1" begin="00:02:06.52" id="p1" end="00:02:08.04">Second caption?</p>
+      <p begin="00:02:08.04" id="p2" end="00:02:11.44">Ok third caption.</p>
+      <p begin="00:02:11.44" id="p3" end="00:02:16.44">A what<br />oh</p>
+    </div>
+  </body>
+</tt>`;
+
+test('parses xml tree from sample', t => {
+  t.plan(1);
+  const doc = parseDoc(SAMPLE, { i: 0 });
+  t.deepEqual(doc, {
+    selector: { class: 'red' },
+    properties: {
+      color: 'green',
+    },
+  });
+});
+
