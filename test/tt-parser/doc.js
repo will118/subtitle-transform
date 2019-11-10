@@ -71,7 +71,10 @@ test('parses cue text from sample', t => {
     [ 'First caption!' ],
     [ 'Second caption?' ],
     [ 'Ok third caption.' ],
-    [ 'A what', 'oh' ],
+    [
+      'A what',
+      'oh'
+    ],
     [
       {
         tag: { type: TagType.Span },
@@ -79,7 +82,7 @@ test('parses cue text from sample', t => {
           {
             tag: { type: TagType.Span }, children: [ 'This' ]
           },
-          'line is white'
+          ' line is white',
         ]
       },
       'This line is something else'

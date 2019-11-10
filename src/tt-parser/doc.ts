@@ -2,7 +2,7 @@ import sax from 'sax';
 import { XmlElement, XmlRoot } from '../types';
 
 export const parseDoc = (body: string) => {
-  const parser = sax.parser(true, { trim: true });
+  const parser = sax.parser(true, { trim: false });
 
   const root: XmlRoot = {
     parent: null,
@@ -12,6 +12,9 @@ export const parseDoc = (body: string) => {
   let current: XmlElement | XmlRoot = root;
 
   parser.ontext = t => {
+    if (/^\s*$/.test(t)) {
+      return;
+    }
     current.children.push(t);
   };
 

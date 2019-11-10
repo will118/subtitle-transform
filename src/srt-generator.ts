@@ -1,4 +1,4 @@
-import { Block, Cue, CueLine, Timestamp, SubtitleData } from './types';
+import { Block, Cue, CueLine, Timestamp, TagType, SubtitleData } from './types';
 
 const isCue = (block: Block): block is Cue => 'range' in block;
 
@@ -13,15 +13,27 @@ const ts = (ts: Timestamp) => {
   return `${h}:${m}:${s},${ms}`;
 }
 
-const formatCueLine = (children: Array<CueLine>): string => {
+const INLINE = new Set<TagType>([
+  TagType.Span,
+  TagType.Class,
+  TagType.Bold,
+  TagType.Italic,
+]);
+
+const formatCueLine = (lines: Array<CueLine>, isInline: boolean): string => {
   let output = ''
-  for (const elem of children) {
-    if (typeof elem === "string") {
-      output += `${elem}\n`;
+
+  for (const elem of lines) {
+    if (typeof elem === 'string') {
+      output += `${elem}`;
     } else {
-      output += `${formatCueLine(elem.children)}`;
+      output += formatCueLine(elem.children, INLINE.has(elem.tag.type));
+    }
+    if (!isInline) {
+      output += '\n';
     }
   }
+
   return output;
 }
 
@@ -37,9 +49,10 @@ function generate(sub: SubtitleData) {
     if (isCue(block)) {
       output += `${index++}\n`;
       output += `${ts(block.range.start)} --> ${ts(block.range.end)}\n`;
-      output += formatCueLine(block.lines);
+      output += formatCueLine(block.lines, false);
     }
   }
+
   return output;
 }
 

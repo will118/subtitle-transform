@@ -57,6 +57,7 @@ const mapLines = (children: XmlElement['children']): Array<CueLine> => {
     }
 
     if (elem.name === 'br') {
+      // br just add the next thing as a new cueline
       continue;
     }
 
