@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^12.11.4",
-    "minimist": "^1.2.0"
+    "@types/sax": "^1.2.0",
+    "minimist": "^1.2.0",
+    "sax": "^1.2.4"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.0",

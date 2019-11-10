@@ -1,8 +1,7 @@
 const test = require('tape')
-const { parseDoc } = require('../../dist/tt-parser/doc');
+const { parse } = require('../../dist/tt-parser');
 
-const SAMPLE = `<?xml version="1.0" encoding="utf-8"?>
-<tt xmlns="http://www.w3.org/2006/10/ttaf1" xmlns:ttp="http://www.w3.org/2006/10/ttaf1#parameter" ttp:timeBase="media" xmlns:tts="http://www.w3.org/2006/10/ttaf1#style" xml:lang="en" xmlns:ttm="http://www.w3.org/2006/10/ttaf1#metadata">
+const SAMPLE = `<?xml version="1.0" encoding="utf-8"?> <tt xmlns="http://www.w3.org/2006/10/ttaf1" xmlns:ttp="http://www.w3.org/2006/10/ttaf1#parameter" ttp:timeBase="media" xmlns:tts="http://www.w3.org/2006/10/ttaf1#style" xml:lang="en" xmlns:ttm="http://www.w3.org/2006/10/ttaf1#metadata">
   <head>
     <!--Created on 1/11/2011 at 00:30:00-->
     <metadata>
@@ -28,14 +27,24 @@ const SAMPLE = `<?xml version="1.0" encoding="utf-8"?>
   </body>
 </tt>`;
 
-test('parses xml tree from sample', t => {
+test('parses styles from sample', t => {
   t.plan(1);
-  const doc = parseDoc(SAMPLE, { i: 0 });
-  t.deepEqual(doc, {
-    selector: { class: 'red' },
-    properties: {
-      color: 'green',
+  const { styles } = parse(SAMPLE);
+  t.deepEqual(styles, [
+    {
+      selector: { id: 's1' },
+      properties: { color: 'yellow' },
     },
-  });
+    {
+      selector: { id: 's0' },
+      properties: {
+        backgroundColor: 'black',
+        fontStyle: 'normal',
+        fontSize: 16,
+        fontFamily: 'sansSerif',
+        color: 'white',
+      },
+    },
+  ]);
 });
 

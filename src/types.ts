@@ -38,6 +38,20 @@ export interface CueLine {
   children: Array<CueElement | string>
 }
 
+export interface XmlRoot {
+  parent: null
+  children: Array<XmlElement | string>
+}
+
+export interface XmlElement {
+  name: string
+  // TODO: it's actually a set of strings
+  attributes: { [name: string]: any }
+  isSelfClosing: boolean
+  parent: Option<XmlElement | XmlRoot>
+  children: Array<XmlElement | string>
+}
+
 export interface TimestampRange {
   start: Timestamp
   end: Timestamp
@@ -134,8 +148,35 @@ export interface ColorProperty {
   color: string | HexColor | RGBColor | HSLColor
 }
 
-export type StyleProperty = OpacityProperty | ColorProperty
-export type StyleProperties = Partial<OpacityProperty & ColorProperty>
+export interface BackgroundColorProperty {
+  backgroundColor: string
+}
+
+export interface FontStyle {
+  fontStyle: 'normal' | string
+}
+
+export interface FontSize {
+  fontSize: number
+}
+
+export interface FontFamily {
+  fontFamily: 'sansSerif' | string
+}
+
+export type StyleProperty = OpacityProperty
+  | ColorProperty
+  | BackgroundColorProperty
+  | FontStyle
+  | FontSize
+  | FontFamily
+
+export type StyleProperties = Partial<OpacityProperty
+  & ColorProperty
+  & BackgroundColorProperty
+  & FontStyle
+  & FontSize
+  & FontFamily>
 
 export interface IdSelector {
   id: string
