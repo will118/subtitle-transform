@@ -34,13 +34,13 @@ const tagForStr = (str: string): Tag & { closing: boolean } => {
   throw new Error('Tag not supported or some other error: ' + str);
 }
 
-const parse = (pos: { i: number }, line: string): CueLine => {
+const parse = (pos: { i: number }, line: string): Array<CueLine> => {
   enum State { Normal, Tag }
 
   let str = '';
   let state = State.Normal;
 
-  const children: CueLine = []
+  const children: Array<CueLine> = []
 
   while (pos.i < line.length) {
     const char = line[pos.i];
@@ -77,7 +77,7 @@ const parse = (pos: { i: number }, line: string): CueLine => {
   return children;
 }
 
-export const parseCueLine = (line: string): CueLine => {
+export const parseCueLine = (line: string): Array<CueLine> => {
   let pos = { i: 0 };
 
   return parse(pos, line);

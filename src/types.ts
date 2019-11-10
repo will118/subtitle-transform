@@ -31,14 +31,14 @@ export interface ItalicTag {
 }
 
 export interface SpanTag {
-  type: TagType.Span,
+  type: TagType.Span
   // TODO: attrs
 }
 
 export type Tag = ClassTag | BoldTag | ItalicTag | SpanTag
 
-export type CueElement = { tag: Tag, children: CueLine }
-export type CueLine = Array<CueElement | string>
+export type CueElement = { tag: Tag, children: Array<CueLine> }
+export type CueLine = CueElement | string
 
 export interface XmlRoot {
   parent: null

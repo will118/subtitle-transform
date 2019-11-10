@@ -37,35 +37,37 @@ const mapRange = (attrs: Attrs): TimestampRange => {
   return { start: mapMatch(beginMatch), end: mapMatch(endMatch) };
 }
 
-const mapLine = (children: XmlElement['children']): CueLine => {
-  const line: CueLine = [];
+const mapLines = (children: XmlElement['children']): Array<CueLine> => {
+  const lines: Array<CueLine> = [];
 
   for (const elem of children) {
     if (!isElem(elem)) {
-      // Add plain strings
-      line.push(elem);
+      lines.push(elem);
       continue;
     }
 
     if (elem.name === 'span') {
       // TODO: handle attrs
-      line.push({
+      lines.push({
         tag: { type: TagType.Span },
-        children: mapLine(elem.children),
+        children: mapLines(elem.children),
       });
 
       continue;
     }
 
-    if (elem.name !== 'br') {
-      throw new Error(`Unsupported element in cue "${elem.name}"`);
+    if (elem.name === 'br') {
+      continue;
     }
+
+    throw new Error(`Unsupported element in cue "${elem.name}"`);
   }
 
-  return line;
+  return lines;
 }
 
 const mapBlock = (block: XmlElement): Block => {
+  // TODO: these settings
   const settings: CueSettings = {
     vertical: null,
     line: null,
@@ -73,10 +75,11 @@ const mapBlock = (block: XmlElement): Block => {
     size: null,
     align: null,
   }
+
   return {
     range: mapRange(block.attributes),
     id: block.attributes['id'] ?? null,
-    lines: [mapLine(block.children)],
+    lines: mapLines(block.children),
     settings,
   }
 }

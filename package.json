@@ -1,12 +1,12 @@
 {
   "name": "subtitle-transform",
   "version": "0.0.1",
-  "description": "```",
+  "description": "",
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run build && node dist",
     "build": "rm -rf dist && tsc",
-    "test": "npm run build && tape test/**/*.js"
+    "test": "npm run build && tape 'test/**/*.js'"
   },
   "keywords": [],
   "author": "",

@@ -19,20 +19,20 @@ NOTE Different
 
 92
 00:00:06.200 --> 00:00:09.200 line:70% position:50% align:middle
-<c.yellow>This won't be yellow</c>
-`;
+<c.yellow>This won't be yellow</c>`;
 
 const EXPECTED =`1
 00:00:02,200 --> 00:00:05,200
 Yes, hello yes
 Good good
-Wowza
+Wowza.
 
 2
-00:00:02,200 --> 00:00:05,200
-This won't be yellow`;
+00:00:06,200 --> 00:00:09,200
+This won't be yellow
+`;
 
-test('parses timestamps for a cue from sample', t => {
+test('exports expected srt from vtt', t => {
   t.plan(1);
   const subData = parse(SAMPLE);
   const result = generate(subData)

@@ -59,15 +59,13 @@ test('parses cue text from sample', t => {
   const result = parse(SAMPLE);
   const [cue] = result.blocks;
   const [firstLine] = cue.lines;
-  t.deepEqual(firstLine, [
-    {
-      tag: {
-        type: TagType.Class,
-        className: 'yellow',
-      },
-      children: [ 'Yes, hello yes' ]
-    }
-  ]);
+  t.deepEqual(firstLine, {
+    tag: {
+      type: TagType.Class,
+      className: 'yellow',
+    },
+    children: [ 'Yes, hello yes' ]
+  });
 });
 
 test('parses settings for a cue from sample', t => {
