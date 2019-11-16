@@ -21,10 +21,10 @@ const SAMPLE = `<?xml version="1.0" encoding="utf-8"?> <tt xmlns="http://www.w3.
   <body tts:textAlign="center" style="s0">
     <div>
       <p begin="00:01:57.32" id="p0" end="00:01:58.36">First caption!</p>
-      <p style="s1" begin="00:02:06.52" id="p1" end="00:02:08.04">Second caption?</p>
+      <p style="s1" begin="00:02:06.52" id="p1" end="00:02:08.04">Second <span>foo</span> caption?</p>
       <p begin="00:02:08.04" id="p2" end="00:02:11.44">Ok third caption.</p>
       <p begin="00:02:11.44" id="p3" end="00:02:16.44">A what<br />oh</p>
-      <p style="s1" begin="00:03:01.88" id="p14" end="00:03:04.64"><span tts:color="white"><span>This</span> line is white<br /></span>This line is something else</p>
+      <p style="s1" begin="00:03:01.88" id="p14" end="00:03:04.64">AHEM: <span tts:color="white"><span>This</span> line is white<br /></span>This line is another line</p>
     </div>
   </body>
 </tt>`;
@@ -64,28 +64,36 @@ test('parses a cue timestamp', t => {
   });
 });
 
-test('parses cue text from sample', t => {
+test('parses cue text from tt sample', t => {
   t.plan(1);
   const { blocks: cues } = parse(SAMPLE);
-  t.deepEqual(cues.map(cue => cue.lines), [
-    [ 'First caption!' ],
-    [ 'Second caption?' ],
-    [ 'Ok third caption.' ],
+  console.dir(cues.map(cue => cue.lines), { depth: null });
+
+  const expected = [
+    [ [ 'First caption!' ] ],
     [
-      'A what',
-      'oh'
+      [
+        'Second ',
+        { tag: { type: TagType.Span }, children: [ 'foo' ] },
+        ' caption?'
+      ]
     ],
+    [ [ 'Ok third caption.' ] ],
+    [ [ 'A what' ], [ 'oh' ] ],
     [
-      {
-        tag: { type: TagType.Span },
-        children: [
-          {
-            tag: { type: TagType.Span }, children: [ 'This' ]
-          },
-          ' line is white',
-        ]
-      },
-      'This line is something else'
-    ],
-  ]);
+      [
+        'AHEM: ',
+        {
+          tag: { type: TagType.Span },
+          children: [
+            { tag: { type: TagType.Span }, children: [ 'This' ] },
+            ' line is white'
+          ]
+        }
+      ],
+      [ { tag: { type: 3 }, children: [] }, 'This line is another line' ]
+    ]
+  ];
+
+  t.deepEqual(cues.map(cue => cue.lines), expected);
 });

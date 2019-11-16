@@ -123,12 +123,12 @@ const parseTimestamps: ParseFn<Option<TimestampRange>> = (body, pos) => {
 }
 
 const parseCueText: ParseFn<Array<CueLine>> = (body, pos) => {
-  const results = [];
+  const results: Array<CueLine> = [];
 
   while (!isEOF(body, pos)) {
     const line = consumeLine(body, pos)
     if (line) {
-      results.push(...parseCueLine(line));
+      results.push(parseCueLine(line));
     } else {
       pos.i++;
       if (body[pos.i] === '\n') {

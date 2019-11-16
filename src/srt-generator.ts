@@ -13,31 +13,37 @@ const ts = (ts: Timestamp) => {
   return `${h}:${m}:${s},${ms}`;
 }
 
-const INLINE = new Set<TagType>([
-  TagType.Span,
-  TagType.Class,
-  TagType.Bold,
-  TagType.Italic,
-]);
+const withStyling = (tagType: TagType, contents: string): string => {
+  switch (tagType) {
+    case TagType.Bold:
+      return `<b>${contents}</b>`;
+    case TagType.Italic:
+      return `<i>${contents}</i>`;
+    default:
+      return contents;
+  }
+}
 
-const formatCueLine = (lines: Array<CueLine>, isInline: boolean): string => {
+const formatCueLine = (lines: CueLine, enableStyles: boolean): string => {
   let output = ''
 
   for (const elem of lines) {
     if (typeof elem === 'string') {
       output += `${elem}`;
+    } else if (Array.isArray(elem)) {
+      throw new Error('Not implemented');
     } else {
-      output += formatCueLine(elem.children, INLINE.has(elem.tag.type));
-    }
-    if (!isInline) {
-      output += '\n';
+      const contents = formatCueLine(elem.children, enableStyles);
+      output += enableStyles
+        ? withStyling(elem.tag.type, contents)
+        : contents;
     }
   }
 
   return output;
 }
 
-function generate(sub: SubtitleData) {
+function generate(sub: SubtitleData, enableStyles: boolean = false) {
   let output = '';
   let index = 1;
 
@@ -49,7 +55,10 @@ function generate(sub: SubtitleData) {
     if (isCue(block)) {
       output += `${index++}\n`;
       output += `${ts(block.range.start)} --> ${ts(block.range.end)}\n`;
-      output += formatCueLine(block.lines, false);
+      for (const line of block.lines) {
+        output += formatCueLine(line, enableStyles);
+        output += '\n';
+      }
     }
   }
 

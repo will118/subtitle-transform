@@ -37,8 +37,8 @@ export interface SpanTag {
 
 export type Tag = ClassTag | BoldTag | ItalicTag | SpanTag
 
-export type CueElement = { tag: Tag, children: Array<CueLine> }
-export type CueLine = CueElement | string
+export type CueElement = { tag: Tag, children: CueLine }
+export type CueLine = Array<CueElement | string>
 
 export interface XmlRoot {
   parent: null

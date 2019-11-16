@@ -9,7 +9,7 @@ export const findChild = (elem: XmlElement | string, name: string): XmlElement =
   }
 
   const child = elem.children.find(x => isElem(x) && x.name === name);
-  return child as XmlElement
+  return child as XmlElement || null
 }
 
 // TODO: types.ts?
