@@ -1,4 +1,13 @@
-import { Block, Cue, CueLine, Timestamp, TagType, SubtitleData } from './types';
+import {
+  Block,
+  Cue,
+  CueLine,
+  Timestamp,
+  TagType,
+  SubtitleData,
+  GeneratorFn,
+  GeneratorOpts,
+} from './types';
 
 const isCue = (block: Block): block is Cue => 'range' in block;
 
@@ -43,7 +52,14 @@ const formatCueLine = (lines: CueLine, enableStyles: boolean): string => {
   return output;
 }
 
-function generate(sub: SubtitleData, enableStyles: boolean = false) {
+export const generate: GeneratorFn = (
+  sub: SubtitleData,
+  opts: GeneratorOpts
+) => {
+  if (opts.enableStyles) {
+    throw new Error('Not currently supported');
+  }
+
   let output = '';
   let index = 1;
 
@@ -56,7 +72,7 @@ function generate(sub: SubtitleData, enableStyles: boolean = false) {
       output += `${index++}\n`;
       output += `${ts(block.range.start)} --> ${ts(block.range.end)}\n`;
       for (const line of block.lines) {
-        output += formatCueLine(line, enableStyles);
+        output += formatCueLine(line, opts.enableStyles);
         output += '\n';
       }
     }
@@ -64,5 +80,3 @@ function generate(sub: SubtitleData, enableStyles: boolean = false) {
 
   return output;
 }
-
-export { generate };

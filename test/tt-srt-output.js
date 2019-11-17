@@ -45,6 +45,6 @@ This line is something else
 test('exports expected srt from tt', t => {
   t.plan(1);
   const subData = parse(SAMPLE);
-  const result = generate(subData)
+  const result = generate(subData, { enableStyles: false })
   t.equal(result, EXPECTED);
 });

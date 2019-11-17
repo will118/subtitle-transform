@@ -1,5 +1,13 @@
 export type Option<T> = T | null
 
+export interface ParserOpts { }
+export type ParserFn = (data: string, opts: ParserOpts) => SubtitleData;
+
+export interface GeneratorOpts {
+  enableStyles: boolean
+}
+export type GeneratorFn = (data: SubtitleData, opts: GeneratorOpts) => string;
+
 export interface Metadata {
   name: string
   value: string

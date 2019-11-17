@@ -67,8 +67,6 @@ test('parses a cue timestamp', t => {
 test('parses cue text from tt sample', t => {
   t.plan(1);
   const { blocks: cues } = parse(SAMPLE);
-  console.dir(cues.map(cue => cue.lines), { depth: null });
-
   const expected = [
     [ [ 'First caption!' ] ],
     [

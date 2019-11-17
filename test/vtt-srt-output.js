@@ -48,6 +48,6 @@ This won't be yellow
 test('exports expected unstyled srt from vtt', t => {
   t.plan(1);
   const subData = parse(SAMPLE);
-  const result = generate(subData)
+  const result = generate(subData, { enableStyles: false })
   t.equal(result, EXPECTED);
 });
