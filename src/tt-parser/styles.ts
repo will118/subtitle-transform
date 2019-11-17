@@ -30,7 +30,7 @@ const mapStyle = (attrs: Attrs) => {
   }
 
   return {
-    selector: { id: attrs['id'] },
+    selector: { id: attrs['id'] ?? attrs['xml:id'] },
     properties,
   }
 }

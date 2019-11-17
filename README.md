@@ -1,8 +1,15 @@
 # subtitle-transform
 
 * Parse TTML/VTT files and output SRT or ASS.
-  * SRT is a very limited format so retains only timings and text.
-  * ASS should retain most of the styling.
+
+Transforms:
+```
+VTT  => SRT
+     => ASS
+
+TTML => SRT
+     => ASS
+```
 
 # Usage
 ```

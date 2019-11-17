@@ -42,11 +42,7 @@ const TAG_LOOKUP = new Map<string, TagType>([
   ['span', TagType.Span],
 ]);
 
-const anotherFunction = (
-  children: XmlElement['children'],
-  line: CueLine
-): boolean => {
-
+const mapLine = (children: XmlElement['children'], line: CueLine): boolean => {
   let child: string | XmlElement | undefined;
 
   while (child = children.shift()) {
@@ -69,7 +65,7 @@ const anotherFunction = (
         children: childLine,
       })
 
-      const hasRemaining = anotherFunction(child.children, childLine);
+      const hasRemaining = mapLine(child.children, childLine);
 
       if (hasRemaining) {
         return true;
@@ -112,7 +108,7 @@ const mapLines = (children: XmlElement['children']): Array<CueLine> => {
     // come to line breaks in deeply nested tags.
     if (supportedTagType) {
       const line: CueLine = [];
-      const hasRemaining = anotherFunction(child.children, line);
+      const hasRemaining = mapLine(child.children, line);
 
       currentLine.push({
         tag: { type: supportedTagType },
@@ -143,6 +139,8 @@ const mapBlock = (block: XmlElement): Block => {
     size: null,
     align: null,
   }
+
+  // TODO: block.attribute['style']
 
   return {
     lines: mapLines(block.children),

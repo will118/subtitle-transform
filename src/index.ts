@@ -56,6 +56,7 @@ function run() {
       generate = generateSRT;
       break;
     case 'ass':
+      generatorOpts.enableStyles = true;
       generate = generateASS;
       break;
   }
@@ -65,8 +66,8 @@ function run() {
     process.exit(1);
   }
 
-  const srtOutput = generate(parse(inputContents, parseOpts), generatorOpts);
-  console.log(srtOutput);
+  const output = generate(parse(inputContents, parseOpts), generatorOpts);
+  console.log(output);
 }
 
 run();

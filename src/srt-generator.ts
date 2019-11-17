@@ -1,6 +1,4 @@
 import {
-  Block,
-  Cue,
   CueLine,
   Timestamp,
   TagType,
@@ -8,8 +6,8 @@ import {
   GeneratorFn,
   GeneratorOpts,
 } from './types';
+import { isCue } from './utils';
 
-const isCue = (block: Block): block is Cue => 'range' in block;
 
 const ts = (ts: Timestamp) => {
   const pad = (n: number, width: number) => String(n).padStart(width, '0')

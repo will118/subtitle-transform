@@ -136,11 +136,7 @@ export interface OpacityProperty {
   opacity: AlphaValue
 }
 
-interface HexColor {
-  hex: string
-}
-
-interface RGBColor {
+export interface RGBColor {
   red: number
   green: number
   blue: number
@@ -155,7 +151,7 @@ interface HSLColor {
 }
 
 export interface ColorProperty {
-  color: string | HexColor | RGBColor | HSLColor
+  color: string | RGBColor | HSLColor
 }
 
 export interface BackgroundColorProperty {
