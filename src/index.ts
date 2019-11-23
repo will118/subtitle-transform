@@ -43,6 +43,7 @@ function run() {
 
   const generatorOpts = {
     enableStyles: false,
+    timestampSkew: 0
   };
 
   let generate: GeneratorFn | null = null
@@ -59,6 +60,10 @@ function run() {
       generatorOpts.enableStyles = true;
       generate = generateASS;
       break;
+  }
+
+  if (argv.timestampSkew) {
+    generatorOpts.timestampSkew = parseFloat(argv.timestampSkew);
   }
 
   if (generate === null) {

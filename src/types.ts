@@ -5,6 +5,7 @@ export type ParserFn = (data: string, opts: ParserOpts) => SubtitleData;
 
 export interface GeneratorOpts {
   enableStyles: boolean
+  timestampSkew: number
 }
 export type GeneratorFn = (data: SubtitleData, opts: GeneratorOpts) => string;
 
@@ -41,6 +42,7 @@ export interface ItalicTag {
 export interface SpanTag {
   type: TagType.Span
   // TODO: attrs
+  styleName: string | null
 }
 
 export type Tag = ClassTag | BoldTag | ItalicTag | SpanTag

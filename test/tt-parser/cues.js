@@ -20,10 +20,67 @@ test('parses simple br cue', t => {
   const [cue] = cues;
   t.deepEqual(cue.lines, [
     [
-      'normal ',
+      {
+        tag: { type: TagType.Span, styleName: null }, children: [ 'normal ' ]
+      }
     ],
     [
-      'usual',
+      {
+        tag: { type: TagType.Span, styleName: null }, children: [ 'usual' ]
+      }
+    ],
+  ]);
+});
+
+test('parses simple styled paragraph cue', t => {
+  t.plan(1);
+  const sample = makeSample([
+    '<p style="s1" begin="00:03:01.88" end="00:03:04.64">normal <br />usual</p>',
+  ]);
+  const { blocks: cues } = parse(sample);
+  const [cue] = cues;
+  t.deepEqual(cue.lines, [
+    [
+      {
+        tag: { type: TagType.Span, styleName: 's1' },
+        children: [ 'normal ' ]
+      }
+    ],
+    [
+      {
+        tag: { type: TagType.Span, styleName: 's1' },
+        children: [ 'usual' ]
+      }
+    ],
+  ]);
+});
+
+test('parses complex styled paragraph cue', t => {
+  t.plan(1);
+  const sample = makeSample([
+    '<p style="s1" begin="00:03:01.88" end="00:03:04.64"><span style="s3">normal <br /></span>usual</p>',
+  ]);
+  const { blocks: cues } = parse(sample);
+  const [cue] = cues;
+  t.deepEqual(cue.lines, [
+    [
+      {
+        tag: { type: TagType.Span, styleName: 's1' },
+        children: [
+          {
+            tag: { type: TagType.Span, styleName: 's3' },
+            children: [
+              'normal '
+            ]
+          }
+        ]
+      }
+    ],
+    [
+      {
+        tag: { type: TagType.Span, styleName: 's1' },
+        children: [ 'usual' ]
+      }
     ],
   ]);
 });
@@ -38,14 +95,19 @@ test('parses single line bold cue', t => {
   const [cue] = cues;
   t.deepEqual(cue.lines, [
     [
-      'normal ',
       {
-        tag: { type: TagType.Bold },
+        tag: { type: TagType.Span, styleName: null },
         children: [
-          'metadata'
+          'normal ',
+          {
+            tag: { type: TagType.Bold },
+            children: [
+              'metadata'
+            ]
+          },
+          ' usual',
         ]
-      },
-      ' usual',
+      }
     ],
   ]);
 });
@@ -60,22 +122,32 @@ test('parses complex cues', t => {
   const [cue] = cues;
   t.deepEqual(cue.lines, [
     [
-      'normal ',
       {
-        tag: { type: TagType.Bold },
+        tag: { type: TagType.Span, styleName: null },
         children: [
-          'meta'
+          'normal ',
+          {
+            tag: { type: TagType.Bold },
+            children: [
+              'meta'
+            ]
+          },
         ]
-      },
+      }
     ],
     [
       {
-        tag: { type: TagType.Bold },
+        tag: { type: TagType.Span, styleName: null },
         children: [
-          'data'
+          {
+            tag: { type: TagType.Bold },
+            children: [
+              'data'
+            ]
+          },
+          ' usual'
         ]
       },
-      ' usual',
-    ]
+    ],
   ]);
 });

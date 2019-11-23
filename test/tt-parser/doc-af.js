@@ -68,30 +68,59 @@ test('parses cue text from tt sample', t => {
   t.plan(1);
   const { blocks: cues } = parse(SAMPLE);
   const expected = [
-    [ [ 'First caption!' ] ],
     [
       [
-        'Second ',
-        { tag: { type: TagType.Span }, children: [ 'foo' ] },
-        ' caption?'
-      ]
+        { tag: { type: TagType.Span, styleName: null }, children: [ 'First caption!' ] },
+      ],
     ],
-    [ [ 'Ok third caption.' ] ],
-    [ [ 'A what' ], [ 'oh' ] ],
     [
       [
-        'AHEM: ',
         {
-          tag: { type: TagType.Span },
+          tag: { type: TagType.Span, styleName: 's1' },
           children: [
-            { tag: { type: TagType.Span }, children: [ 'This' ] },
-            ' line is white'
+            'Second ',
+            { tag: { type: TagType.Span, styleName: null }, children: [ 'foo' ] },
+            ' caption?'
           ]
         }
+      ]
+    ],
+    [
+      [
+        { tag: { type: TagType.Span, styleName: null }, children: [ 'Ok third caption.' ] },
       ],
-      [ { tag: { type: 3 }, children: [] }, 'This line is another line' ]
-    ]
+    ],
+    [
+      [ { tag: { type: TagType.Span, styleName: null }, children: [ 'A what' ] } ],
+      [ { tag: { type: TagType.Span, styleName: null }, children: [ 'oh' ] } ],
+    ],
+    [
+      [
+        {
+          tag: { type: TagType.Span, styleName: 's1' },
+          children: [
+            'AHEM: ',
+            {
+              tag: { type: TagType.Span, styleName: null },
+              children: [
+                { tag: { type: TagType.Span, styleName: null }, children: [ 'This' ] },
+                ' line is white'
+              ]
+            }
+          ],
+        },
+      ],
+      [
+        {
+          tag: { type: TagType.Span, styleName: 's1' },
+          children: [
+            'This line is another line'
+          ]
+        },
+      ],
+    ],
   ];
 
   t.deepEqual(cues.map(cue => cue.lines), expected);
 });
+

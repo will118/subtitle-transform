@@ -88,12 +88,15 @@ const stylesRegion = (styles: Array<Style>): string => {
 
 type CueFn = (cue: Cue) => string | null
 
-const ts = (ts: Timestamp) => {
+const ts = (ts: Timestamp, skew: number) => {
   const pad = (n: number, width: number) => String(n).padStart(width, '0')
 
+  const skewed = ts.seconds + skew;
+
   const h = ts.hours;
-  const m = pad(ts.minutes, 2);
-  const s = pad(ts.seconds, 2);
+  // TODO: negative skew
+  const m = pad(skewed > 59 ? ts.minutes + 1 : ts.minutes, 2);
+  const s = pad(skewed % 59, 2);
   const ms = pad(ts.milliseconds, 3).substring(0, 2);
 
   return `${h}:${m}:${s}.${ms}`;
@@ -115,7 +118,7 @@ const line = (lines: Array<CueLine>): string | null => {
   return lines.map(reduce).join('\\N');
 };
 
-const blockRegion = (blocks: Array<Block>): string => {
+const blockRegion = (blocks: Array<Block>, opts: GeneratorOpts): string => {
   const FORMAT = new Map<string, CueFn>([
     [
       'Layer',
@@ -123,11 +126,11 @@ const blockRegion = (blocks: Array<Block>): string => {
     ],
     [
       'Start',
-      cue => ts(cue.range.start)
+      cue => ts(cue.range.start, opts.timestampSkew)
     ],
     [
       'End',
-      cue => ts(cue.range.end)
+      cue => ts(cue.range.end, opts.timestampSkew)
     ],
     [
       'Style',
@@ -183,7 +186,7 @@ export const generate: GeneratorFn = (
   output += '\n\n';
   output += stylesRegion(sub.styles);
   output += '\n\n';
-  output += blockRegion(sub.blocks);
+  output += blockRegion(sub.blocks, opts);
 
   return output;
 }

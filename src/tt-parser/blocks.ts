@@ -5,6 +5,7 @@ import {
   Block,
   TimestampRange,
   TagType,
+  Tag,
 } from '../types';
 import { Attrs, isElem, findChild, tryStr } from './utils';
 
@@ -37,9 +38,14 @@ const mapRange = (attrs: Attrs): TimestampRange => {
   return { start: mapMatch(beginMatch), end: mapMatch(endMatch) };
 }
 
-const TAG_LOOKUP = new Map<string, TagType>([
-  ['b', TagType.Bold],
-  ['span', TagType.Span],
+const TAG_LOOKUP = new Map<string, (e: XmlElement) => Tag>([
+  ['b', _e => ({ type: TagType.Bold })],
+  ['span', (e: XmlElement) => ({
+    type: TagType.Span, styleName: e.attributes['style'] ?? null
+  })],
+  ['p', (e: XmlElement) => ({
+    type: TagType.Span, styleName: e.attributes['style'] ?? null
+  })],
 ]);
 
 const mapLine = (children: XmlElement['children'], line: CueLine): boolean => {
@@ -55,19 +61,22 @@ const mapLine = (children: XmlElement['children'], line: CueLine): boolean => {
       return true;
     }
 
-    const supportedTagType = TAG_LOOKUP.get(child.name);
+    const tagFn = TAG_LOOKUP.get(child.name);
 
-    if (supportedTagType) {
+    if (tagFn) {
       const childLine: CueLine = [];
 
       line.push({
-        tag: { type: supportedTagType },
+        tag: tagFn(child),
         children: childLine,
       })
 
       const hasRemaining = mapLine(child.children, childLine);
 
       if (hasRemaining) {
+        if (child.children.length) {
+          children.unshift(child);
+        }
         return true;
       }
 
@@ -81,7 +90,6 @@ const mapLine = (children: XmlElement['children'], line: CueLine): boolean => {
   return false;
 }
 
-//  <p>normal <b>meta<br />data</b> usual</p>
 const mapLines = (children: XmlElement['children']): Array<CueLine> => {
   const lines: Array<CueLine> = [[]];
 
@@ -102,16 +110,17 @@ const mapLines = (children: XmlElement['children']): Array<CueLine> => {
       continue;
     }
 
-    const supportedTagType = TAG_LOOKUP.get(child.name);
+    const tagFn = TAG_LOOKUP.get(child.name);
 
     // Consume a tag, ideally we would recurse but it's quite tricky when we
     // come to line breaks in deeply nested tags.
-    if (supportedTagType) {
+    // Or maybe it's not, but this works and I have bigger fish.
+    if (tagFn) {
       const line: CueLine = [];
       const hasRemaining = mapLine(child.children, line);
 
       currentLine.push({
-        tag: { type: supportedTagType },
+        tag: tagFn(child),
         children: line,
       });
 
@@ -143,7 +152,7 @@ const mapBlock = (block: XmlElement): Block => {
   // TODO: block.attribute['style']
 
   return {
-    lines: mapLines(block.children),
+    lines: mapLines([block]),
     range: mapRange(block.attributes),
     id: block.attributes['id'] ?? null,
     settings,
