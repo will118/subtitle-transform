@@ -1,10 +1,10 @@
 import minimist from 'minimist';
 import { readFileSync } from 'fs';
 import { ParserFn, GeneratorFn } from './types';
-import { parse as parseVTT } from './vtt-parser';
-import { parse as parseTT } from './tt-parser';
-import { generate as generateSRT } from './srt-generator';
-import { generate as generateASS } from './ass-generator';
+import { parse as parseVTT } from './parsers/vtt';
+import { parse as parseTT } from './parsers/tt';
+import { generate as generateSRT } from './generators/srt';
+import { generate as generateASS } from './generators/ass';
 
 const argv = minimist(process.argv.slice(2));
 
