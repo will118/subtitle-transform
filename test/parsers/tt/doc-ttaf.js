@@ -120,7 +120,13 @@ test('parses cue text from tt sample', t => {
           children: [
             'AHEM: ',
             {
-              tag: { type: TagType.Span, styleName: null, properties: {} },
+              tag: {
+                type: TagType.Span,
+                styleName: null,
+                properties: {
+                  color: 'white',
+                }
+              },
               children: [
                 {
                   tag: { type: TagType.Span, styleName: null, properties: {} },

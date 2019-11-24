@@ -1,7 +1,7 @@
 import { XmlElement, Style, StyleProperties } from '../../types';
 import { Attrs, isElem, findChild, tryInt, tryStr } from './utils';
 
-const mapStyle = (attrs: Attrs) => {
+export const mapStyle = (attrs: Attrs) => {
   const properties: StyleProperties = {};
 
   const fontSize = tryInt(attrs, 'tts:fontSize');

@@ -7,6 +7,7 @@ import {
   TagType,
   Tag,
 } from '../../types';
+import { mapStyle } from './styles';
 import { Attrs, isElem, findChild, tryStr } from './utils';
 
 const mapRange = (attrs: Attrs): TimestampRange => {
@@ -43,12 +44,12 @@ const TAG_LOOKUP = new Map<string, (e: XmlElement) => Tag>([
   ['span', (e: XmlElement) => ({
     type: TagType.Span,
     styleName: e.attributes['style'] ?? null,
-    properties: {},
+    properties: mapStyle(e.attributes).properties,
   })],
   ['p', (e: XmlElement) => ({
     type: TagType.Span,
     styleName: e.attributes['style'] ?? null,
-    properties: {},
+    properties: mapStyle(e.attributes).properties,
   })],
 ]);
 
