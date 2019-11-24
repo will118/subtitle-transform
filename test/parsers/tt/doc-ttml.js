@@ -29,24 +29,3 @@ const SAMPLE = `<?xml version="1.0" encoding="UTF-8"?>
         </div>
     </body>
 </tt>`;
-
-test.skip('parses styles from sample', t => {
-  t.plan(1);
-  const { styles } = parse(SAMPLE);
-  t.deepEqual(styles, [
-    {
-      selector: { id: 's1' },
-      properties: { color: 'yellow' },
-    },
-    {
-      selector: { id: 's0' },
-      properties: {
-        backgroundColor: 'black',
-        fontStyle: 'normal',
-        fontSize: 16,
-        fontFamily: 'sansSerif',
-        color: 'white',
-      },
-    },
-  ]);
-});

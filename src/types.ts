@@ -43,6 +43,7 @@ export interface SpanTag {
   type: TagType.Span
   // TODO: attrs
   styleName: string | null
+  properties: StyleProperties
 }
 
 export type Tag = ClassTag | BoldTag | ItalicTag | SpanTag

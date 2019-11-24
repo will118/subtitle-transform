@@ -48,11 +48,12 @@ Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Text
 
 Dialogue: 0,0:01:57.32,0:01:58.36,main,Unknown,0000,0000,0000,First caption!
 Dialogue: 0,0:02:11.44,0:02:16.44,main,Unknown,0000,0000,0000,A what\\Noh
-Dialogue: 0,0:03:01.88,0:03:04.64,s1,Unknown,0000,0000,0000,{\\c&HFFFFFF&}This line is white\\NThis line is something else`;
+Dialogue: 0,0:03:01.88,0:03:04.64,s1,Unknown,0000,0000,0000,{\\c&HFFFFFF&}This line is white\\N{\r}This line is something else`;
 
 test('exports expected ass from tt', t => {
   t.plan(1);
   const subData = parse(SAMPLE);
-  const result = generate(subData, { enableStyles: true })
+  const result = generate(subData, { enableStyles: true, timestampSkew: 0 })
+  console.log(result);
   t.equal(result, EXPECTED);
 });

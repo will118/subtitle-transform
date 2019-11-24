@@ -41,10 +41,14 @@ const mapRange = (attrs: Attrs): TimestampRange => {
 const TAG_LOOKUP = new Map<string, (e: XmlElement) => Tag>([
   ['b', _e => ({ type: TagType.Bold })],
   ['span', (e: XmlElement) => ({
-    type: TagType.Span, styleName: e.attributes['style'] ?? null
+    type: TagType.Span,
+    styleName: e.attributes['style'] ?? null,
+    properties: {},
   })],
   ['p', (e: XmlElement) => ({
-    type: TagType.Span, styleName: e.attributes['style'] ?? null
+    type: TagType.Span,
+    styleName: e.attributes['style'] ?? null,
+    properties: {},
   })],
 ]);
 

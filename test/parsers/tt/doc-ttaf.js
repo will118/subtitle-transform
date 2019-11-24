@@ -70,16 +70,22 @@ test('parses cue text from tt sample', t => {
   const expected = [
     [
       [
-        { tag: { type: TagType.Span, styleName: null }, children: [ 'First caption!' ] },
+        {
+          tag: { type: TagType.Span, styleName: null, properties: {} },
+          children: [ 'First caption!' ]
+        },
       ],
     ],
     [
       [
         {
-          tag: { type: TagType.Span, styleName: 's1' },
+          tag: { type: TagType.Span, styleName: 's1', properties: {} },
           children: [
             'Second ',
-            { tag: { type: TagType.Span, styleName: null }, children: [ 'foo' ] },
+            {
+              tag: { type: TagType.Span, styleName: null, properties: {} },
+              children: [ 'foo' ]
+            },
             ' caption?'
           ]
         }
@@ -87,23 +93,39 @@ test('parses cue text from tt sample', t => {
     ],
     [
       [
-        { tag: { type: TagType.Span, styleName: null }, children: [ 'Ok third caption.' ] },
+        {
+          tag: { type: TagType.Span, styleName: null, properties: {} },
+          children: [ 'Ok third caption.' ]
+        },
       ],
-    ],
-    [
-      [ { tag: { type: TagType.Span, styleName: null }, children: [ 'A what' ] } ],
-      [ { tag: { type: TagType.Span, styleName: null }, children: [ 'oh' ] } ],
     ],
     [
       [
         {
-          tag: { type: TagType.Span, styleName: 's1' },
+          tag: { type: TagType.Span, styleName: null, properties: {} },
+          children: [ 'A what' ]
+        },
+      ],
+      [
+        {
+          tag: { type: TagType.Span, styleName: null, properties: {} },
+          children: [ 'oh' ]
+        }
+      ],
+    ],
+    [
+      [
+        {
+          tag: { type: TagType.Span, styleName: 's1', properties: {} },
           children: [
             'AHEM: ',
             {
-              tag: { type: TagType.Span, styleName: null },
+              tag: { type: TagType.Span, styleName: null, properties: {} },
               children: [
-                { tag: { type: TagType.Span, styleName: null }, children: [ 'This' ] },
+                {
+                  tag: { type: TagType.Span, styleName: null, properties: {} },
+                  children: [ 'This' ]
+                },
                 ' line is white'
               ]
             }
@@ -112,7 +134,7 @@ test('parses cue text from tt sample', t => {
       ],
       [
         {
-          tag: { type: TagType.Span, styleName: 's1' },
+          tag: { type: TagType.Span, styleName: 's1', properties: {} },
           children: [
             'This line is another line'
           ]

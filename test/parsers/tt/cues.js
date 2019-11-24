@@ -22,12 +22,12 @@ test('parses simple br cue', t => {
   t.deepEqual(cue.lines, [
     [
       {
-        tag: { type: TagType.Span, styleName: null }, children: [ 'normal ' ]
+        tag: { type: TagType.Span, styleName: null, properties: {} }, children: [ 'normal ' ]
       }
     ],
     [
       {
-        tag: { type: TagType.Span, styleName: null }, children: [ 'usual' ]
+        tag: { type: TagType.Span, styleName: null, properties: {} }, children: [ 'usual' ]
       }
     ],
   ]);
@@ -43,13 +43,13 @@ test('parses simple styled paragraph cue', t => {
   t.deepEqual(cue.lines, [
     [
       {
-        tag: { type: TagType.Span, styleName: 's1' },
+        tag: { type: TagType.Span, styleName: 's1', properties: {} },
         children: [ 'normal ' ]
       }
     ],
     [
       {
-        tag: { type: TagType.Span, styleName: 's1' },
+        tag: { type: TagType.Span, styleName: 's1', properties: {} },
         children: [ 'usual' ]
       }
     ],
@@ -66,10 +66,10 @@ test('parses complex styled paragraph cue', t => {
   t.deepEqual(cue.lines, [
     [
       {
-        tag: { type: TagType.Span, styleName: 's1' },
+        tag: { type: TagType.Span, styleName: 's1', properties: {} },
         children: [
           {
-            tag: { type: TagType.Span, styleName: 's3' },
+            tag: { type: TagType.Span, styleName: 's3', properties: {} },
             children: [
               'normal '
             ]
@@ -79,7 +79,7 @@ test('parses complex styled paragraph cue', t => {
     ],
     [
       {
-        tag: { type: TagType.Span, styleName: 's1' },
+        tag: { type: TagType.Span, styleName: 's1', properties: {} },
         children: [ 'usual' ]
       }
     ],
@@ -97,7 +97,7 @@ test('parses single line bold cue', t => {
   t.deepEqual(cue.lines, [
     [
       {
-        tag: { type: TagType.Span, styleName: null },
+        tag: { type: TagType.Span, styleName: null, properties: {} },
         children: [
           'normal ',
           {
@@ -124,7 +124,7 @@ test('parses complex cues', t => {
   t.deepEqual(cue.lines, [
     [
       {
-        tag: { type: TagType.Span, styleName: null },
+        tag: { type: TagType.Span, styleName: null, properties: {} },
         children: [
           'normal ',
           {
@@ -138,7 +138,7 @@ test('parses complex cues', t => {
     ],
     [
       {
-        tag: { type: TagType.Span, styleName: null },
+        tag: { type: TagType.Span, styleName: null, properties: {} },
         children: [
           {
             tag: { type: TagType.Bold },

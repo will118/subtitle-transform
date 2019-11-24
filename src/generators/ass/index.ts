@@ -6,6 +6,7 @@ import {
   SubtitleData,
   Block,
   Style,
+  TagType,
   StyleProperties,
   Timestamp,
 } from '../../types';
@@ -103,13 +104,23 @@ const ts = (ts: Timestamp, skew: number) => {
 }
 
 const line = (lines: Array<CueLine>): string | null => {
+  // TODO: inline styles
   const reduce = (cueLine: CueLine): string => {
     let output = '';
     for (const child of cueLine) {
       if (typeof child === 'string') {
         output += child;
       } else {
-        output += reduce(child.children);
+        const contents = reduce(child.children);
+        // TODO: we don't want to create unnecessary styles (i.e. the default)
+        if (child.tag.type === TagType.Span && child.tag.styleName !== null) {
+            // && parentStyle !== null && parentStyle !== child.tag.styleName) {
+          output += `{\\r${child.tag.styleName}}`;
+          output += contents;
+          output += '{\\r}'
+        } else {
+          output += contents;
+        }
       }
     }
     return output;
@@ -134,7 +145,31 @@ const blockRegion = (blocks: Array<Block>, opts: GeneratorOpts): string => {
     ],
     [
       'Style',
-      _cue => 'main'
+      cue => {
+        let style = null
+        // We are going to fold all the lines together into one ASS line.
+        // Inline styles are used for nested spans, but we can create more
+        // readable ASS files if we use a style for the whole line.
+        //
+        // So let's check the outer style of each element on each line.
+        // TODO: double check this
+        for (const line of cue.lines) {
+          for (const elem of line) {
+            if (typeof elem !== 'string') {
+              if (elem.tag.type === TagType.Span) {
+                if (style === null) {
+                  style = elem.tag.styleName;
+                } else {
+                  if (style !== elem.tag.styleName) {
+                    return 'main';
+                  }
+                }
+              }
+            }
+          }
+        }
+        return style ?? 'main';
+      }
     ],
     [
       'Name',
