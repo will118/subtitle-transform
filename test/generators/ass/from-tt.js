@@ -38,22 +38,22 @@ Timer: 0.0000
 WrapStyle: 0
 
 [V4+ Styles]
-Format: Name,Fontsize,PrimaryColour
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,ScaleX,ScaleY,Spacing,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV
 
-Style: s0,16,&H00FFFFFF
-Style: s1,,&H0000FFFF
+Style: Default,Arial,18,&H00FFFFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,3,2,0020,0020,0020
+Style: s0,sansSerif,16,&H00FFFFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,3,2,0020,0020,0020
+Style: s1,Arial,18,&H0000FFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,3,2,0020,0020,0020
 
 [Events]
 Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Text
 
-Dialogue: 0,0:01:57.32,0:01:58.36,main,Unknown,0000,0000,0000,First caption!
-Dialogue: 0,0:02:11.44,0:02:16.44,main,Unknown,0000,0000,0000,A what\\Noh
+Dialogue: 0,0:01:57.32,0:01:58.36,Default,Unknown,0000,0000,0000,First caption!
+Dialogue: 0,0:02:11.44,0:02:16.44,Default,Unknown,0000,0000,0000,A what\\Noh
 Dialogue: 0,0:03:01.88,0:03:04.64,s1,Unknown,0000,0000,0000,{\\c&HFFFFFF&}This line is white{\\r}\\NThis line is something else`;
 
 test('exports expected ass from tt', t => {
   t.plan(1);
   const subData = parse(SAMPLE);
   const result = generate(subData, { enableStyles: true })
-  console.log(result);
   t.equal(result, EXPECTED);
 });
