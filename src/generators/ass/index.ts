@@ -188,15 +188,12 @@ const stylesRegion = (styles: Array<Style>): string => {
 
 type CueFn = (cue: Cue) => string | null
 
-const ts = (ts: Timestamp, skew: number) => {
+const ts = (ts: Timestamp) => {
   const pad = (n: number, width: number) => String(n).padStart(width, '0')
 
-  const skewed = ts.seconds + skew;
-
   const h = ts.hours;
-  // TODO: negative skew
-  const m = pad(skewed > 59 ? ts.minutes + 1 : ts.minutes, 2);
-  const s = pad(skewed % 60, 2);
+  const m = pad(ts.minutes, 2);
+  const s = pad(ts.seconds, 2);
   const ms = pad(ts.milliseconds, 3).substring(0, 2);
 
   return `${h}:${m}:${s}.${ms}`;
@@ -248,7 +245,7 @@ const line = (lines: Array<CueLine>, parentStyle: string | null): string | null 
   return lines.map(reduce).join('\\N');
 };
 
-const blockRegion = (blocks: Array<Block>, opts: GeneratorOpts): string => {
+const blockRegion = (blocks: Array<Block>): string => {
   // TODO: global that relies on ordering of array.
   // Fix this atrocity.
   let style: string | null = null
@@ -260,11 +257,11 @@ const blockRegion = (blocks: Array<Block>, opts: GeneratorOpts): string => {
     ],
     [
       'Start',
-      cue => ts(cue.range.start, opts.timestampSkew)
+      cue => ts(cue.range.start)
     ],
     [
       'End',
-      cue => ts(cue.range.end, opts.timestampSkew)
+      cue => ts(cue.range.end)
     ],
     [
       'Style',
@@ -343,7 +340,7 @@ export const generate: GeneratorFn = (
   output += '\n\n';
   output += stylesRegion(sub.styles);
   output += '\n\n';
-  output += blockRegion(sub.blocks, opts);
+  output += blockRegion(sub.blocks);
 
   return output;
 }

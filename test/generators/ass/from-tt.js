@@ -53,7 +53,7 @@ Dialogue: 0,0:03:01.88,0:03:04.64,s1,Unknown,0000,0000,0000,{\\c&HFFFFFF&}This l
 test('exports expected ass from tt', t => {
   t.plan(1);
   const subData = parse(SAMPLE);
-  const result = generate(subData, { enableStyles: true, timestampSkew: 0 })
+  const result = generate(subData, { enableStyles: true })
   console.log(result);
   t.equal(result, EXPECTED);
 });

@@ -5,9 +5,13 @@ export type ParserFn = (data: string, opts: ParserOpts) => SubtitleData;
 
 export interface GeneratorOpts {
   enableStyles: boolean
-  timestampSkew: number
 }
 export type GeneratorFn = (data: SubtitleData, opts: GeneratorOpts) => string;
+
+export interface TransformerOpts {
+  timestampSkew: number
+}
+export type TransformerFn = (data: SubtitleData, opts: TransformerOpts) => SubtitleData
 
 export interface Metadata {
   name: string
