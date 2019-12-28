@@ -25,7 +25,7 @@ You can also pass `--timestampSkew=-2.1` to adjust timestamps.
 ```
 npm i -S subtitle-transform
 ```
-```
+```typescript
 import { parseTT, generateASS } from 'subtitle-transform';
 
 const inputContents = `<?xml version="1.0" encoding="utf-8"?>
