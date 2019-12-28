@@ -13,6 +13,9 @@
     "test": "npm run build && tape 'test/**/*.js'",
     "prepare": "npm run build"
   },
+  "files": [
+    "/dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
