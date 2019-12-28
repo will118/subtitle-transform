@@ -2,7 +2,9 @@
   "name": "subtitle-transform",
   "version": "1.0.0",
   "description": "Transform various subtitle formats",
-  "bin": "dist/cli.js",
+  "bin": {
+    "subtitle-transform": "dist/cli.js"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

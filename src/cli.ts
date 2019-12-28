@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import minimist from 'minimist';
 import { readFileSync } from 'fs';
 import { ParserFn, GeneratorFn } from './types';

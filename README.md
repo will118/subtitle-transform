@@ -1,18 +1,39 @@
 # subtitle-transform
 
-Parses various subtitle formats (SRT/VTT/TTML/TTAF) into a type called
-`SubtitleData`.
+Parses various subtitle formats (VTT/TTML/TTAF) into a type called `SubtitleData`.
 
-There are various generators that take `SubtitleData` and emit text
-(SRT/ASS/VTT).
+There are various generators that take `SubtitleData` and emit text (SRT/ASS).
 
 Text is easy, the difficult part is mapping styles.
 
 # Usage
+
+### CLI
 ```
-npm i
-npm run build
-node dist/index.js --inputFormat vtt --input the-amazing-show-ep1.vtt --outputFormat srt
+npm i -g subtitle-transform
+```
+With a file:
+```
+subtitle-transform --input=ep1.vtt --inputFormat=vtt --outputFormat=ass
+```
+or pipe:
+```
+cat ep1.vtt | subtitle-transform --inputFormat=vtt --outputFormat=ass
+```
+
+You can also pass `--timestampSkew=-2.1` to adjust timestamps.
+
+### Library
+```
+npm i -S subtitle-transform
+```
+```
+import { parseTT, generateASS } from 'subtitle-transform';
+
+const subtitleData = parse(inputContents, {});
+const output = generate(subtitleData, { enableStyles: true });
+
+console.log(output);
 ```
 
 # Progress
@@ -22,19 +43,13 @@ node dist/index.js --inputFormat vtt --input the-amazing-show-ep1.vtt --outputFo
   - [x] Style support
 - [x] TT parsing
   - [x] Style support
-- [ ] SRT parsing
-  - [ ] Style support
-- [ ] ASS parsing
-  - [ ] Style support
 
 ## Generating
-- [ ] VTT output
-  - [ ] Style support
 - [x] SRT output
-  - [ ] Style support
+  - [x] Style support
 - [x] ASS output
-  - [ ] Style support
-
+  - [x] Style support
+  - [ ] Region support
 
 Resources used:
 - https://www.w3.org/TR/webvtt1/#file-parsing
