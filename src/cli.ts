@@ -11,7 +11,7 @@ import { transform as transformSkew } from './transformers/skew';
 
 const argv = minimist(process.argv.slice(2));
 
-const REQUIRED_ARGS = ['input', 'inputFormat', 'outputFormat'];
+const REQUIRED_ARGS = ['inputFormat', 'outputFormat'];
 
 function run() {
   for (const arg of REQUIRED_ARGS) {
@@ -22,6 +22,13 @@ function run() {
     if (typeof argv.input !== 'string') {
       throw new Error(`Invalid "${arg}" arg`);
     }
+  }
+
+  let input = argv.input;
+
+  if (!input) {
+    // read from stdin
+    input = 0;
   }
 
   const inputContents = readFileSync(argv.input, 'utf8');
