@@ -4,8 +4,6 @@ Parses various subtitle formats (VTT/TTML/TTAF) into a type called `SubtitleData
 
 There are various generators that take `SubtitleData` and emit text (SRT/ASS).
 
-Text is easy, the difficult part is mapping styles.
-
 # Usage
 
 ### CLI
@@ -43,12 +41,17 @@ console.log(output);
   - [x] Style support
 - [x] TT parsing
   - [x] Style support
+- [ ] ASS parsing
+  - [ ] Style support
 
 ## Generating
 - [x] SRT output
   - [x] Style support
 - [x] ASS output
   - [x] Style support
+  - [ ] Region support
+- [ ] VTT output
+  - [ ] Style support
   - [ ] Region support
 
 Resources used:
