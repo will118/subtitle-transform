@@ -16,10 +16,12 @@ const REQUIRED_ARGS = ['inputFormat', 'outputFormat'];
 function run() {
   for (const arg of REQUIRED_ARGS) {
     const value = argv[arg];
+
     if (!value) {
       throw new Error(`Missing "${arg}" arg`);
     }
-    if (typeof argv.input !== 'string') {
+
+    if (typeof value !== 'string') {
       throw new Error(`Invalid "${arg}" arg`);
     }
   }
@@ -31,7 +33,7 @@ function run() {
     input = 0;
   }
 
-  const inputContents = readFileSync(argv.input, 'utf8');
+  const inputContents = readFileSync(input, 'utf8');
 
   const parseOpts = {};
 
@@ -69,7 +71,9 @@ function run() {
       break;
   }
 
-  const transformerOpts = { timestampSkew: argv.timestampSkew };
+  const transformerOpts = {
+    timestampSkew: argv.timestampSkew ?? 0
+  };
 
   if (generate === null) {
     console.error('Unsupported output format');
@@ -84,7 +88,7 @@ function run() {
     generatorOpts
   );
 
-  console.log(output);
+  process.stdout.write(output);
 }
 
 run();
