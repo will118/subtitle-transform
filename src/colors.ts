@@ -31,8 +31,7 @@ export const rgbForConstant = (name: string): RGBColor => {
   const val = CONSTANTS[name];
 
   if (!val) {
-    // throw new Error(`Missing constant: '${name}'`);
-    return CONSTANTS.white;
+    throw new Error(`Missing constant: '${name}'`);
   }
 
   return val;

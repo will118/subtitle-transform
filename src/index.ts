@@ -5,6 +5,7 @@ import { parse as parseVTT } from './parsers/vtt';
 import { parse as parseTT } from './parsers/tt';
 import { generate as generateSRT } from './generators/srt';
 import { generate as generateASS } from './generators/ass';
+import { transform as transformSkew } from './transformers/skew';
 
 const argv = minimist(process.argv.slice(2));
 
@@ -41,10 +42,7 @@ function run() {
     process.exit(1);
   }
 
-  const generatorOpts = {
-    enableStyles: false,
-    timestampSkew: 0
-  };
+  const generatorOpts = { enableStyles: false };
 
   let generate: GeneratorFn | null = null
 
@@ -62,8 +60,10 @@ function run() {
       break;
   }
 
+  const transformerOpts = { timestampSkew: 0 };
+
   if (argv.timestampSkew) {
-    generatorOpts.timestampSkew = parseFloat(argv.timestampSkew);
+    transformerOpts.timestampSkew = parseFloat(argv.timestampSkew);
   }
 
   if (generate === null) {
@@ -71,7 +71,14 @@ function run() {
     process.exit(1);
   }
 
-  const output = generate(parse(inputContents, parseOpts), generatorOpts);
+  const output = generate(
+    transformSkew(
+      parse(inputContents, parseOpts),
+      transformerOpts
+    ),
+    generatorOpts
+  );
+
   console.log(output);
 }
 

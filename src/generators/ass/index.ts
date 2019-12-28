@@ -126,7 +126,7 @@ const stylesRegion = (styles: Array<Style>): string => {
     [
       'Shadow',
       _properties => {
-        return '3';
+        return '0';
       }
     ],
     [
@@ -317,6 +317,8 @@ const blockRegion = (blocks: Array<Block>): string => {
   output += `\nFormat: ${[...FORMAT.keys()].join(',')}\n`
 
   for (const block of blocks) {
+    // TODO: fix this global
+    style = null;
     if (isCue(block)) {
       output += '\nDialogue: ';
       output += [...FORMAT.values()].map(fn => fn(block)).join(',');
