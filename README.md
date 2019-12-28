@@ -28,8 +28,34 @@ npm i -S subtitle-transform
 ```
 import { parseTT, generateASS } from 'subtitle-transform';
 
-const subtitleData = parse(inputContents, {});
-const output = generate(subtitleData, { enableStyles: true });
+const inputContents = `<?xml version="1.0" encoding="utf-8"?>
+  <tt xmlns="http://www.w3.org/2006/10/ttaf1" xml:lang="en" xmlns:ttm="http://www.w3.org/2006/10/ttaf1#metadata">
+  <head>
+    <!--Created on 1/11/2011 at 00:30:00-->
+    <metadata>
+      <ttm:title>
+        Yellow eggs and potatoes
+      </ttm:title>
+      <ttm:copyright>
+        Paul
+      </ttm:copyright>
+    </metadata>
+    <styling>
+      <style id="s0" tts:backgroundColor="black" tts:fontStyle="normal" tts:fontSize="16" tts:fontFamily="sansSerif" tts:color="white" />
+      <style id="s1" style="s0" tts:color="yellow" />
+    </styling>
+  </head>
+  <body tts:textAlign="center" style="s0">
+    <div>
+      <p begin="00:01:57.32" id="p0" end="00:01:58.36">First caption!</p>
+      <p begin="00:02:11.44" id="p3" end="00:02:16.44">A what<br />oh</p>
+      <p style="s1" begin="00:03:01.88" id="p14" end="00:03:04.64"><span tts:color="white">This line is white<br /></span>This line is something else</p>
+    </div>
+  </body>
+</tt>`;
+
+const subtitleData = parseTT(inputContents, {});
+const output = generateASS(subtitleData, { enableStyles: true });
 
 console.log(output);
 ```

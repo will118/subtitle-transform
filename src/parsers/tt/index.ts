@@ -1,10 +1,10 @@
-import { SubtitleData, Header, Block, Style } from '../../types';
+import { ParserFn, ParserOpts, Header, Block, Style } from '../../types';
 import { mapHeader } from './header';
 import { mapStyles } from './styles';
 import { mapBlocks } from './blocks';
 import { parseDoc } from './doc';
 
-export function parse(body: string): SubtitleData {
+export const parse: ParserFn = (body: string, _opts: ParserOpts) => {
   const doc = parseDoc(body);
 
   const header: Header = mapHeader(doc);

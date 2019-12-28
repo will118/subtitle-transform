@@ -1,11 +1,11 @@
-import { SubtitleData } from '../../types';
+import { ParserFn, ParserOpts } from '../../types';
 
 import { isEOF, skipNewlines } from './utils';
 import { parseHeader } from './header';
 import { parseRegions } from './region';
 import { parseBlock } from './block';
 
-export function parse(body: string): SubtitleData {
+export const parse: ParserFn = (body: string, _opts: ParserOpts) => {
   const pos = { i: 0, line: 0 };
   // 4.1.1 An optional U+FEFF BYTE ORDER MARK (BOM) character.
   // 4.1.2 The string "WEBVTT".

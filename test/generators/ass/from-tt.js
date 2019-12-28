@@ -40,9 +40,9 @@ WrapStyle: 0
 [V4+ Styles]
 Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,ScaleX,ScaleY,Spacing,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV
 
-Style: Default,Arial,18,&H00FFFFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,3,2,0020,0020,0020
-Style: s0,sansSerif,16,&H00FFFFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,3,2,0020,0020,0020
-Style: s1,Arial,18,&H0000FFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,3,2,0020,0020,0020
+Style: Default,Arial,18,&H00FFFFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,0,2,0020,0020,0020
+Style: s0,sansSerif,16,&H00FFFFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,0,2,0020,0020,0020
+Style: s1,Arial,18,&H0000FFFF,&H0000FFFF,&H00000000,&H80000000,200,100,100,0,1,2,0,2,0020,0020,0020
 
 [Events]
 Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Text
